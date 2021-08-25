@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.demo.models.Customer;
 import com.example.demo.models.Hires;
 import com.example.demo.repositories.HiresRepo;
 
@@ -35,31 +35,32 @@ public class HiresController {
     	return repository.save(newHires);
     }
 	
-	@GetMapping("/Hires/{cid}")
+	@GetMapping("/Hires/{hid}")
 	Optional<Hires> one(@PathVariable String hid) {
 	    
 	    return repository.findById(hid);
 	      //.orElseThrow(() -> new customerNotFoundException(id));
 	}
 	
-	@PutMapping("/Hires/{cid}")
+	@PutMapping("/Hires/{hid}")
 	Hires replaceHires(@RequestBody Hires newHires, @PathVariable String hid) {
 	    
 	    return repository.findById(hid)
-	      .map(Hires -> {
-	        Hires.setName(newHires.getName());
-	        Hires.setCid(newhires.getCid());
-	        return repository.save(customer);
+	      .map(hires -> {
+	        hires.setHireCustomer(newHires.getHireCustomer());
+	        hires.setHid(newHires.getHid());
+	        return repository.save(hires);
 	      })
 	      .orElseGet(() -> {
-	        newCustomer.setCid(Cid);
-	        return repository.save(newCustomer);
+	        newHires.setHid(hid);
+	        return repository.save(newHires);
 	      });
 	 }
 	
-	 @DeleteMapping("/customers/{id}")
-	 void deletecustomer(@PathVariable String Cid) {
-	    repository.deleteById(Cid);
+	
+	 @DeleteMapping("/Hires/{hid}")
+	 void deleteHires(@PathVariable String hid) {
+	    repository.deleteById(hid);
 	 }
 
     
